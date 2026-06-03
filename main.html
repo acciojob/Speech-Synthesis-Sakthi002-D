@@ -38,26 +38,42 @@
 
   //Your code goes here
 
-	function populateVoices(){
-		voices = speechSynthesis.getVoices();
+	msg.text = document.querySelector('[name="text"]').value;
 
-		voicesDropdown.innerHTML = voices
-		.map(function(voice) {
-			return `
-				<option value ="${voice.name}">
-				${voice.name} (${voice.lang})
-			</option>
-			`;
-		})\
-		.join('';)
 
-		function speak() {
-			speechSynthesis.cancel();
+// Load Voices
+function populateVoices() {
 
-			speechSynthesis.speak(msg);
-	}
+  voices = speechSynthesis.getVoices();
 
-		function setVoice() {
+  voicesDropdown.innerHTML = voices
+    .map(voice => `
+      <option value="${voice.name}">
+        ${voice.name} (${voice.lang})
+      </option>
+    `)
+    .join('');
+}
+
+
+// Speak
+function speak() {
+
+  speechSynthesis.cancel();
+
+  speechSynthesis.speak(msg);
+}
+
+
+// Stop
+function stop() {
+
+  speechSynthesis.cancel();
+}
+
+
+// Set Voice
+function setVoice() {
 
   msg.voice = voices.find(
     voice => voice.name === this.value
@@ -66,11 +82,16 @@
   speak();
 }
 
-		function setOption() {
 
-			msg.text = document.query('[name="text"').value;
+// Update Rate / Pitch / Text
+function setOption() {
 
-			speechSynthesis.addEventListener(
+  msg[this.name] = this.value;
+}
+
+
+// Events
+speechSynthesis.addEventListener(
   'voiceschanged',
   populateVoices
 );
@@ -90,7 +111,7 @@ stopButton.addEventListener(
   stop
 );
 
-options.forEach(function(option) {
+options.forEach(option => {
 
   option.addEventListener(
     'change',
