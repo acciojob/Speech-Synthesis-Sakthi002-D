@@ -38,7 +38,7 @@
 
   //Your code goes here
 
-	functio populateVoices(){
+	function populateVoices(){
 		voices = speechSynthesis.getVoices();
 
 		voicesDropdown.innerHTML = voices
@@ -57,13 +57,14 @@
 			speechSynthesis.speak(msg);
 	}
 
-		function setVoices() {
-			ms.voice = voices.find(function(voice) {
-				return voice.name === this.value;
-			}.bind(this));
+		function setVoice() {
 
-			speak();
-		}
+  msg.voice = voices.find(
+    voice => voice.name === this.value
+  );
+
+  speak();
+}
 
 		function setOption() {
 
